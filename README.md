@@ -69,7 +69,8 @@ Requirements: a C compiler (`gcc` or `clang`) and `make`.
 git clone https://github.com/rafauto/minesweeper-c.git
 cd minesweeper-c
 make
-./minesweeper
+./minesweeper        # random game
+./minesweeper 42     # reproducible game with a fixed seed
 ```
 
 Without `make`:

@@ -70,12 +70,15 @@ static void print_board(int board[SIZE][SIZE], int reveal_bombs)
     }
 }
 
-int main(void)
+/* Usage: minesweeper [seed]  - an optional seed makes the game reproducible. */
+int main(int argc, char *argv[])
 {
     int board[SIZE][SIZE] = {{0}};
     const int total_cells = SIZE * SIZE;
 
-    srand((unsigned int)time(NULL));
+    unsigned int seed = (argc > 1) ? (unsigned int)strtoul(argv[1], NULL, 10)
+                                   : (unsigned int)time(NULL);
+    srand(seed);
 
     int level = read_int_in_range("Digite o nivel de dificuldade desejado (entre 1 e 3): ", 1, 3);
     if (level < 0) {

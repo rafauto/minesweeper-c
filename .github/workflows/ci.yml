@@ -18,8 +18,15 @@ jobs:
         run: |
           printf '1\n%.0s' $(seq 1 20) | timeout 10 ./minesweeper > out.txt
           grep -E "Perdeu|ganhou" out.txt
-      - name: Input validation (invalid level, moves off the board)
+      - name: Input validation (invalid level and direction)
         run: |
-          printf 'abc\n9\n1\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n' | timeout 10 ./minesweeper > out.txt
-          grep -q "Entrada invalida" out.txt
-          grep -q "sairia do tabuleiro" out.txt
+          printf 'abc\n9\n1\n7\n' | timeout 10 ./minesweeper 1 > out.txt
+          test "$(grep -c 'Entrada invalida' out.txt)" -eq 3
+      - name: Moves off the board are rejected
+        run: |
+          # Fixed seeds keep the test reproducible; at least one game must reach the top edge.
+          for seed in $(seq 1 50); do
+            printf '1\n%.0s' 1 | cat - <(printf '2\n%.0s' $(seq 1 30)) \
+              | timeout 10 ./minesweeper "$seed" | grep -q "sairia do tabuleiro" && exit 0
+          done
+          exit 1
