@@ -1,0 +1,14 @@
+{
+  "name": "minesweeper-c",
+  "image": "mcr.microsoft.com/devcontainers/cpp:1-ubuntu-24.04",
+  "postCreateCommand": "make",
+  "postAttachCommand": "echo 'Build ready. Play with: ./minesweeper'",
+  "customizations": {
+    "codespaces": {
+      "openFiles": ["README.md", "src/campo_minado.c"]
+    },
+    "vscode": {
+      "extensions": ["ms-vscode.cpptools"]
+    }
+  }
+}
