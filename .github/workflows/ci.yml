@@ -12,9 +12,14 @@ jobs:
         compiler: [gcc, clang]
     steps:
       - uses: actions/checkout@v4
-      - name: Build
-        run: make CC=${{ matrix.compiler }}
+      - name: Build (warnings as errors)
+        run: make CC=${{ matrix.compiler }} CFLAGS="-std=c99 -Wall -Wextra -Werror -O2"
       - name: Smoke test (play a full game with scripted input)
         run: |
-          printf '1\n%.0s' $(seq 1 20) | timeout 10 ./minesweeper > out.txt || true
+          printf '1\n%.0s' $(seq 1 20) | timeout 10 ./minesweeper > out.txt
           grep -E "Perdeu|ganhou" out.txt
+      - name: Input validation (invalid level, moves off the board)
+        run: |
+          printf 'abc\n9\n1\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n' | timeout 10 ./minesweeper > out.txt
+          grep -q "Entrada invalida" out.txt
+          grep -q "sairia do tabuleiro" out.txt

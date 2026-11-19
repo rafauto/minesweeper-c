@@ -3,7 +3,7 @@
 ![CI](https://github.com/rafauto/minesweeper-c/actions/workflows/ci.yml/badge.svg)
 ![Language](https://img.shields.io/badge/language-C99-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Status](https://img.shields.io/badge/status-academic%20project-lightgrey)
+![Status](https://img.shields.io/badge/status-complete-brightgreen)
 
 A terminal game written in C, built for an elective programming course at university.
 Cross a 15×15 minefield from the left edge to the right edge without stepping on a hidden bomb.
@@ -50,7 +50,7 @@ flowchart LR
 ```
 
 The board is a `15×15` integer matrix: `0` = empty, `1` = bomb, `-1` = visited path.
-Everything lives in a single `main()` function, as required by the course scope.
+The code is split into small functions for input, bomb placement and board printing.
 
 ## Tech stack
 
@@ -75,7 +75,7 @@ make
 Without `make`:
 
 ```bash
-gcc -std=c99 -Wall -Wextra -o minesweeper src/campo_minado.c
+gcc -std=c99 -Wall -Wextra -O2 -o minesweeper src/campo_minado.c
 ```
 
 ## Project structure
@@ -89,15 +89,23 @@ minesweeper-c/
 └── README.md
 ```
 
-## Known limitations
+## From course version to today
 
-Kept as originally submitted. Things I would improve today:
+The original assignment is preserved in the first commit and in the
+[`v1.0-course`](https://github.com/rafauto/minesweeper-c/tree/v1.0-course) tag.
+The current version keeps the same gameplay and fixes what I would do differently now:
 
-- Random positions use `rand() % 14`, so the last row and column never get bombs.
-- Diagonal moves are not bounded, so moving off the top or bottom edge reads outside the array.
-- An invalid difficulty level prints an error but the game keeps going.
-- Bombs can be placed on the same cell twice, so the real count can be lower than the target.
-- No input validation for non-numeric input.
+| Issue in the course version | Fix |
+| --- | --- |
+| `rand() % 14` never placed bombs on the last row or column | Uses the full `0–14` range |
+| Diagonal moves could leave the board and read outside the array | Moves off the board are rejected |
+| Reaching the last column always won, even on a bomb | The last cell is checked like any other |
+| An invalid difficulty level let the game continue | Level and direction are validated and asked again |
+| Bombs could overlap, so fewer were placed than intended | Exactly 10%, 20% or 30% of cells get a bomb |
+| The start cell could be a bomb | The start cell is always safe |
+| Everything in one `main()` with repeated printing code | Small functions (`read_int_in_range`, `place_bombs`, `print_board`) and named constants |
+
+CI now builds with `-Werror` on GCC and Clang and tests input validation.
 
 ## License
 
