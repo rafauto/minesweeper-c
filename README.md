@@ -8,6 +8,10 @@
 A terminal game written in C, built for an elective programming course at university.
 Cross a 15×15 minefield from the left edge to the right edge without stepping on a hidden bomb.
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/rafauto/minesweeper-c?quickstart=1)
+
+![Gameplay demo: crossing the board with right and diagonal moves until the win message](docs/demo.gif)
+
 ## Why I built this
 
 This was a course assignment to practice the fundamentals of structured programming in C:
@@ -59,9 +63,21 @@ The code is split into small functions for input, bomb placement and board print
 | Language | C (C99) |
 | Compiler | GCC or Clang |
 | Build | Make |
+| Dev environment | Dev Container (GitHub Codespaces) |
 | CI | GitHub Actions (build with GCC and Clang + scripted smoke test) |
 
 ## Getting started
+
+### In the browser (no install)
+
+Click **Open in GitHub Codespaces** above. The environment compiles the game automatically;
+when the terminal is ready, run:
+
+```bash
+./minesweeper
+```
+
+### Locally
 
 Requirements: a C compiler (`gcc` or `clang`) and `make`.
 
@@ -84,6 +100,8 @@ gcc -std=c99 -Wall -Wextra -O2 -o minesweeper src/campo_minado.c
 ```text
 minesweeper-c/
 ├── src/campo_minado.c        # the whole game
+├── docs/demo.gif             # gameplay recording
+├── .devcontainer/            # GitHub Codespaces / Dev Container setup
 ├── Makefile
 ├── .github/workflows/ci.yml  # build + smoke test
 ├── LICENSE
