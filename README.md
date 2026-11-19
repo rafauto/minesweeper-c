@@ -91,8 +91,8 @@ minesweeper-c/
 
 ## From course version to today
 
-The original assignment is preserved in the first commit and in the
-[`v1.0-course`](https://github.com/rafauto/minesweeper-c/tree/v1.0-course) tag.
+The original assignment is preserved in the
+[first commit](https://github.com/rafauto/minesweeper-c/tree/8fa6b20).
 The current version keeps the same gameplay and fixes what I would do differently now:
 
 | Issue in the course version | Fix |
